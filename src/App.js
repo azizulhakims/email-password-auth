@@ -1,33 +1,55 @@
 import { getAuth } from 'firebase/auth'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './App.css';
+import LoginBootsrap from './components/LoginBootsrap';
+import RegisterReactBootstrap from './components/RegisterReactBootstrap';
 import app from './firebase/firebase.init';
+import Main from './layout/Main';
 
-const auth = getAuth(app)
-const handleRegister = (event) => {
-  const email = event.target.email.value;
-  const password = event.target.password.value;
-  event.preventDefault();
-  console.log(email, password)
-}
+// const auth = getAuth(app)
+// const handleRegister = (event) => {
+//   const email = event.target.email.value;
+//   const password = event.target.password.value;
+//   event.preventDefault();
+//   console.log(email, password)
+// }
 
-const handleEmailBlur = event => {
-  console.log(event.target.value);
-}
+// const handleEmailBlur = event => {
+//   console.log(event.target.value);
+// }
 
-const handlePasswordChange = event => {
-  console.log(event.target.value);
-}
+// const handlePasswordChange = event => {
+//   console.log(event.target.value);
+// }
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Main></Main>,
+    children: [
+      {
+        path: '/',
+        element: <RegisterReactBootstrap></RegisterReactBootstrap>
+      },
+
+      {
+        path: '/register',
+        element: <RegisterReactBootstrap></RegisterReactBootstrap>
+      },
+      {
+        path: '/login',
+        element: <LoginBootsrap></LoginBootsrap>
+      },
+    ]
+
+  }
+])
 
 function App() {
   return (
-    <div className="App">
-      <form onSubmit={handleRegister}>
-        <input onBlur={handleEmailBlur} type="email" name="email" placeholder='Your Email' id="" />
-        <br />
-        <input onChange={handlePasswordChange} type="password" name="password" placeholder='Your Password' id="" />
-        <br />
-        <button type='submit'>Resister</button>
-      </form>
+    <div className="">
+      {/* <RegisterReactBootstrap></RegisterReactBootstrap> */}
+      <RouterProvider router={router}></RouterProvider>
     </div>
   );
 }
